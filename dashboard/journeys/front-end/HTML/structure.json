@@ -1,0 +1,22 @@
+{
+  "title": "Estrutura básica de um documento HTML",
+  "description": "",
+  "slug": "estrutura-basica",
+  "content": {
+    "documentation": [
+      {
+        "title": "Estrutura de documento e sites",
+        "url": "https://developer.mozilla.org/pt-BR/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure",
+        "language": "pt-BR"
+      }
+    ],
+    "references": [
+      {
+        "title": "Estrutura de documento e sites",
+        "url": "https://developer.mozilla.org/pt-BR/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure",
+        "language": "pt-BR",
+        "difficulty": 1
+      }
+    ]
+  }
+}
