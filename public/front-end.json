@@ -1,0 +1,30 @@
+{
+  "title": "Jornada Front-End",
+  "description": "",
+  "featuredImage": "",
+  "slug": "front-end",
+  "parent": true,
+  "children": {
+    "CSS": {
+      "title": "CSS",
+      "description": "",
+      "featuredImage": "",
+      "slug": "CSS",
+      "children": []
+    },
+    "HTML": {
+      "title": "HTML (Hyper Text Markup Language)",
+      "description": "",
+      "featuredImage": "",
+      "slug": "HTML",
+      "children": []
+    },
+    "Javascript": {
+      "title": "Javascript",
+      "description": "",
+      "featuredImage": "",
+      "slug": "Javascript",
+      "children": []
+    }
+  }
+}

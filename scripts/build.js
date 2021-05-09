@@ -23,7 +23,7 @@ const recursiveBuild = (items, path) => items.reduce((acc, curr) => {
 
 const saveData = (data) => {
   const files = Object.keys(data).map((file) => 
-    fs.writeFileSync(`${process.cwd()}/build/${file}.json`, JSON.stringify(data[file], null, 2)))
+    fs.writeFileSync(`${process.cwd()}/public/${file}.json`, JSON.stringify(data[file], null, 2)))
   
   return Promise.allSettled(files)
 }
