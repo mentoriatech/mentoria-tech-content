@@ -3,5 +3,5 @@
   "description": "",
   "featuredImage": "",
   "slug": "front-end",
-  "name": "front-end"
+  "parent": true
 }

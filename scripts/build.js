@@ -2,47 +2,41 @@
 
 const fs = require('fs')
 const domain = process.argv[2]
-let path = `${process.cwd()}/dashboard/journeys`
+const rootPath = `${process.cwd()}/dashboard/journeys`
 
-const recursiveData = (items) => {
-
-  return items.map((item) => {
-    path = `${path}/${item}`
-
-    const info = fs.readFileSync(`${path}/info.json`, 'utf-8')
+const recursiveBuild = (items, path) => items.reduce((acc, curr) => {
+    const info = fs.readFileSync(`${path}/${curr}/info.json`, 'utf-8')
     const parsedInfo = JSON.parse(info)
-    const children = fs.readdirSync(path)
-
-    const filteredChildren = children.filter((child) => !child.includes('.json'))
-    console.log('🚀 ~ file: build.js ~ line 17 ~ returnitems.map ~ filteredChildren', filteredChildren);
-
-    if (filteredChildren.length) {
-      return {
-        ...parsedInfo,
-        children: recursiveData(filteredChildren)
-      }
+    const fullChildren = fs.readdirSync(`${path}/${curr}`)
+    
+    let children = fullChildren.filter((child) => !child.includes('.json'))
+    
+    if (children.length) {
+      const followingPath = `${path}/${curr}`
+      children = recursiveBuild(children, followingPath)
     }
+    
+    const result = { ...parsedInfo, children }
 
-    return {
-      ...parsedInfo,
-      children
-    }
-  })
+    return { ...acc, [curr]: result } 
+  }, {})
+
+const saveData = (data) => {
+  const files = Object.keys(data).map((file) => 
+    fs.writeFileSync(`${process.cwd()}/build/${file}.json`, JSON.stringify(data[file], null, 2)))
+  
+  return Promise.allSettled(files)
 }
 
 const dashboardBuild = () => {
-  const items = fs.readdirSync(path)
-
+  const items = fs.readdirSync(rootPath)
   try {
-    const teste = recursiveData(items)
+    const data = recursiveBuild(items, rootPath)
 
-    console.log('🚀 ~ file: build.js ~ line 26 ~ dashboardBuild ~ teste', JSON.stringify(teste, null, 2));
-  
-
+    saveData(data)
 
   } catch(error) {
-  console.log('🚀 ~ file: build.js ~ line 14 ~ dashboardBuild ~ error', error);
-
+    throw new Error(error)
   }
 }
 
@@ -54,10 +48,7 @@ const buildContent = () => {
   if (!domain) {
     throw new Error('Please provide domain')
   }
-
-  
   return buildMap[domain]()
-
 }
 
 module.exports = buildContent()
