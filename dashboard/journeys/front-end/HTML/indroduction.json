@@ -1,25 +1,26 @@
 {
-  "title": "Estrutura básica de um documento HTML",
+  "title": "Introdução ao HTML",
   "description": "",
-  "slug": "estrutura-basica",
+  "slug": "introducao",
   "content": {
     "documentation": [
       {
         "title": "Estrutura de documento e sites",
         "url": "https://developer.mozilla.org/pt-BR/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure",
-        "language": "pt-BR"
+        "language": "pt-BR",
+        "difficulty": 1
       }
     ],
     "references": [
       {
-        "title": "Estrutura HTML",
-        "url": "https://kenzie.com.br/blog/estrutura-html/",
+        "title": "Estrutura de documento e sites",
+        "url": "https://diegomariano.com/introducao-ao-html/",
         "language": "pt-BR",
         "difficulty": 1
       },
       {
-        "title": "Principais tags HTML",
-        "url": "https://www.homehost.com.br/blog/tutoriais/o-que-e-html/#top04",
+        "title": "O que é HTML e para que serve?",
+        "url": "https://br.godaddy.com/blog/o-que-e-html-e-para-que-serve/",
         "language": "pt-BR",
         "difficulty": 1
       }

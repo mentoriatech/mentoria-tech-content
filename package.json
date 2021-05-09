@@ -1,0 +1,11 @@
+{
+  "name": "mentoria-tech-content",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "repository": "git@github.com:mentoriatech/mentoria-tech-content.git",
+  "author": "Eve Montalvão <evemontalvao@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build:dashboard": "node ./scripts/build dashboard"
+  }
+}
