@@ -18,21 +18,23 @@ const recursiveBuild = (items, path) => items.reduce((acc, curr) => {
     
     const result = { ...parsedInfo, children }
 
-    return { ...acc, [curr]: result } 
+    return { ...acc, [curr]: result }
   }, {})
 
 const saveData = (data) => {
   const files = Object.keys(data).map((file) => 
     fs.writeFileSync(`${process.cwd()}/public/${file}.json`, JSON.stringify(data[file], null, 2)))
-  
+
   return Promise.allSettled(files)
 }
 
 const dashboardBuild = () => {
   const items = fs.readdirSync(rootPath)
+  
   try {
+    fs.writeFileSync(`${process.cwd()}/public/journeys.json`, JSON.stringify(items, null, 2))
     const data = recursiveBuild(items, rootPath)
-
+    
     saveData(data)
 
   } catch(error) {

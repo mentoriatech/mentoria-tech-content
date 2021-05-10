@@ -1,5 +1,5 @@
 name: Building content
-on: [commit]
+on: [push]
 jobs:
   Build:
     runs-on: ubuntu-latest
