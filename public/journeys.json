@@ -1,3 +1,9 @@
 [
-  "front-end"
+  {
+    "title": "Jornada Front-End",
+    "description": "",
+    "featuredImage": "",
+    "slug": "front-end",
+    "type": "journey"
+  }
 ]

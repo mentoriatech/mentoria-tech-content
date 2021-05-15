@@ -3,8 +3,9 @@
 const fs = require('fs')
 const domain = process.argv[2]
 const rootPath = `${process.cwd()}/dashboard/journeys`
+const destPath = `${process.cwd()}/public`
 
-const recursiveBuild = (items, path) => items.reduce((acc, curr) => {
+const recursivelyGetJourneysContent = (items, path) => items.reduce((acc, curr) => {
     const info = fs.readFileSync(`${path}/${curr}/info.json`, 'utf-8')
     const parsedInfo = JSON.parse(info)
     const fullChildren = fs.readdirSync(`${path}/${curr}`)
@@ -13,7 +14,7 @@ const recursiveBuild = (items, path) => items.reduce((acc, curr) => {
     
     if (children.length) {
       const followingPath = `${path}/${curr}`
-      children = recursiveBuild(children, followingPath)
+      children = recursivelyGetJourneysContent(children, followingPath)
     }
     
     const result = { ...parsedInfo, children }
@@ -21,21 +22,30 @@ const recursiveBuild = (items, path) => items.reduce((acc, curr) => {
     return { ...acc, [curr]: result }
   }, {})
 
-const saveData = (data) => {
-  const files = Object.keys(data).map((file) => 
-    fs.writeFileSync(`${process.cwd()}/public/${file}.json`, JSON.stringify(data[file], null, 2)))
+const saveData = (data, path) => fs.writeFileSync(path, JSON.stringify(data, null, 2))
 
-  return Promise.allSettled(files)
+const getJourneysInfo = async (journeys) => {
+  if (!journeys) {
+    return []
+  }
+  
+  const journeysInfo = await Promise.allSettled(journeys.map((journey) => fs.readFileSync(`${rootPath}/${journey}/info.json`, 'utf-8')))
+
+  return journeysInfo.reduce((acc, curr) => {
+    return [...acc, JSON.parse(curr.value)]
+  }, [])
 }
 
-const dashboardBuild = () => {
-  const items = fs.readdirSync(rootPath)
+const dashboardBuild = async () => {
   
   try {
-    fs.writeFileSync(`${process.cwd()}/public/journeys.json`, JSON.stringify(items, null, 2))
-    const data = recursiveBuild(items, rootPath)
+    const items = fs.readdirSync(rootPath)
+    const journeys = await getJourneysInfo(items)
+    const data = recursivelyGetJourneysContent(items, rootPath)
     
-    saveData(data)
+    Object.keys(data).map((file) => saveData(data[file], `${destPath}/${file}.json`))
+
+    saveData(journeys, `${destPath}/journeys.json`)
 
   } catch(error) {
     throw new Error(error)
