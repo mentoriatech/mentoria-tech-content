@@ -2,5 +2,9 @@
   "title": "HTML (Hyper Text Markup Language)",
   "description": "",
   "featuredImage": "",
-  "slug": "HTML"
+  "slug": "HTML",
+  "children": [
+    "introduction",
+    "structure"
+  ]
 }

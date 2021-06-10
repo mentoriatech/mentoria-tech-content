@@ -11,12 +11,16 @@ const recursivelyGetJourneysContent = (items, path) => items.reduce((acc, curr) 
     const fullChildren = fs.readdirSync(`${path}/${curr}`)
     
     let children = fullChildren.filter((child) => !child.includes('.json'))
-    
+
     if (children.length) {
       const followingPath = `${path}/${curr}`
       children = recursivelyGetJourneysContent(children, followingPath)
     }
     
+    if (parsedInfo.children && parsedInfo.children.length) {
+      children = parsedInfo.children.map((child) => JSON.parse(fs.readFileSync(`${path}/${curr}/${child}.json`, 'utf-8')))
+    }
+
     const result = { ...parsedInfo, children }
 
     return { ...acc, [curr]: result }
